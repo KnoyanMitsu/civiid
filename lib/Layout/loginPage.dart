@@ -26,7 +26,7 @@ class _LoginpageState extends State<Loginpage> {
       title: "Selamat Datang",
       titleColor: const Color.fromARGB(255, 56, 92, 221),
       subtitle:
-          "Silahkan Logun untuk mendapakan QR. Jika belum ada akun klik registrasi",
+          "Silahkan Login untuk mendapatkan QR. Jika belum ada akun klik registrasi",
       children: [
         // TextFieldWithLabelWidget iku gae TextField ambek Label wajib juga dan JANGAN PAKE TextFormField
         TextFieldWithLabelWidget(label: "Email"),
