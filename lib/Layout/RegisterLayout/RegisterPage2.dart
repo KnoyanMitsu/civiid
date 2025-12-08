@@ -1,6 +1,7 @@
 import 'package:civiid/Layout/TheFinalLayout.dart';
 import 'package:civiid/widget/TextFieldWithLabelWidget.dart';
 import 'package:civiid/widget/TheBestButtonWidget.dart';
+import 'package:civiid/Layout/FaceVerificationLayout/FaceVerificationPage.dart';
 import 'package:flutter/material.dart';
 
 class Registerpage2 extends StatefulWidget {
@@ -26,8 +27,15 @@ class _Registerpage2State extends State<Registerpage2> {
         TheBestButtonWidget(
           color: const Color.fromARGB(255, 56, 92, 221),
           colorText: Colors.white,
-          label: "Lanjut",
-          onPressed: () {},
+          label: "Lanjut ke Verifikasi Wajah",
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const FaceVerificationPage(),
+              ),
+            );
+          },
         ),
       ],
     );

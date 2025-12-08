@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   percent_indicator: ^4.2.5
   shared_preferences: ^2.5.3
+  camera: ^0.11.0+2
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
