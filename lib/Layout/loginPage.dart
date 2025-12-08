@@ -24,6 +24,7 @@ class _LoginpageState extends State<Loginpage> {
     // TheFinalLayout iku template layout dan harus wajib gae iku
     return TheFinalLayout(
       title: "Selamat Datang",
+      titleColor: const Color.fromARGB(255, 56, 92, 221),
       subtitle:
           "Silahkan Logun untuk mendapakan QR. Jika belum ada akun klik registrasi",
       children: [

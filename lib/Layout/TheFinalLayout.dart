@@ -4,6 +4,7 @@ class TheFinalLayout extends StatefulWidget {
   final List<Widget> children;
   final String title;
   final String subtitle;
+  final Color titleColor;
   final int? startindex;
   final int? endindex;
   const TheFinalLayout({
@@ -11,6 +12,7 @@ class TheFinalLayout extends StatefulWidget {
     required this.children,
     this.title = "title",
     this.subtitle = "subtitle",
+    this.titleColor = Colors.black,
     this.startindex,
     this.endindex,
   });
@@ -33,7 +35,11 @@ class _TheFinalLayoutState extends State<TheFinalLayout> {
             children: [
               Text(
                 widget.title,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: widget.titleColor,
+                ),
               ),
               Text(
                 widget.subtitle,
