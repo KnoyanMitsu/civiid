@@ -34,7 +34,7 @@ class _LoginpageState extends State<Loginpage> {
         SizedBox(height: 34),
         // TheBestButtonWidget iku gae ElevatedButton JANGAN GAE ElevatedButton Bawaan
         TheBestButtonWidget(
-          color: Colors.black,
+          color: const Color.fromARGB(255, 56, 92, 221),
           label: "Login",
           onPressed: () {},
           colorText: Colors.white,

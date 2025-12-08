@@ -24,7 +24,7 @@ class _Registerpage2State extends State<Registerpage2> {
         TextFieldWithLabelWidget(label: "Status Perkawinan"),
         SizedBox(height: 30),
         TheBestButtonWidget(
-          color: Colors.black,
+          color: const Color.fromARGB(255, 56, 92, 221),
           colorText: Colors.white,
           label: "Lanjut",
           onPressed: () {},

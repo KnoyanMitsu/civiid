@@ -12,6 +12,15 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Ke Layout/loginPage.dart kalau mau edit
     // Design ne delok en ning group.
-    return MaterialApp(home: Loginpage());
+    return MaterialApp(
+      home: Loginpage(),
+      theme: ThemeData(
+        fontFamily: 'Manrope',
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 56, 92, 221),
+        ),
+        useMaterial3: true,
+      ),
+    );
   }
 }
