@@ -17,9 +17,15 @@ class TheBestButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: 60,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(color)),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
         child: Text(label, style: TextStyle(color: colorText)),
       ),
     );

@@ -17,8 +17,12 @@ class _TextFieldWithLabelWidgetState extends State<TextFieldWithLabelWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.label),
+        SizedBox(height: 5),
         TextFormField(
-          decoration: InputDecoration(border: OutlineInputBorder()),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+            label: Text(widget.label),
+          ),
         ),
       ],
     );

@@ -33,11 +33,11 @@ class _TheFinalLayoutState extends State<TheFinalLayout> {
             children: [
               Text(
                 widget.title,
-                style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               Text(
                 widget.subtitle,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
               ),
 
               if (widget.startindex != null && widget.endindex != null)

@@ -29,9 +29,9 @@ class _LoginpageState extends State<Loginpage> {
       children: [
         // TextFieldWithLabelWidget iku gae TextField ambek Label wajib juga dan JANGAN PAKE TextFormField
         TextFieldWithLabelWidget(label: "Email"),
-        SizedBox(height: 10),
+        SizedBox(height: 15),
         TextFieldWithLabelWidget(label: "Password"),
-        SizedBox(height: 10),
+        SizedBox(height: 34),
         // TheBestButtonWidget iku gae ElevatedButton JANGAN GAE ElevatedButton Bawaan
         TheBestButtonWidget(
           color: Colors.black,
