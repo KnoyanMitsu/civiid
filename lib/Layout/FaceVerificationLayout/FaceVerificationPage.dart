@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:civiid/services/predictservices.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
@@ -100,9 +101,10 @@ class _FaceVerificationPageState extends State<FaceVerificationPage> {
   // TODO: Integrate with backend (FastAPI/Golang)
   // Placeholder untuk mengirim gambar ke backend
   Future<void> _sendImageToBackend(File image) async {
-    // Contoh data mock - nanti diganti dengan response dari backend
-    String predictedGender = "Male"; // Dari backend
-    double predictionScore = 0.90202; // Dari backend
+    final predictService = PredictService();
+    final result = await predictService.predictGender(image);
+    final predictedGender = result['gender'];
+    final predictionScore = result['score'];
 
     // Navigasi ke halaman hasil dengan membawa data
     if (mounted) {
@@ -111,8 +113,8 @@ class _FaceVerificationPageState extends State<FaceVerificationPage> {
         MaterialPageRoute(
           builder: (context) => VerificationResultPage(
             capturedImage: image,
-            predictedGender: predictedGender,
-            predictionScore: predictionScore,
+            predictedGender: predictedGender ?? "",
+            predictionScore: predictionScore ?? 0,
           ),
         ),
       );
@@ -152,10 +154,7 @@ class _FaceVerificationPageState extends State<FaceVerificationPage> {
                 height: 250,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.grey.shade300,
-                    width: 2,
-                  ),
+                  border: Border.all(color: Colors.grey.shade300, width: 2),
                 ),
                 child: ClipOval(
                   child: _isCameraInitialized && _cameraController != null
