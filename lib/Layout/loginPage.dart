@@ -22,6 +22,7 @@ class _LoginpageState extends State<Loginpage> {
   final _nikController = TextEditingController();
   final _passwordController = TextEditingController();
   bool petugas = false;
+  bool _isLoading = false;
   var result;
 
   void navigateToRegister() {
@@ -33,6 +34,10 @@ class _LoginpageState extends State<Loginpage> {
 
   void _login() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
       if (petugas == false) {
         final result = await LoginUserAPI().loginApi(
           int.parse(_nikController.text),
@@ -42,6 +47,9 @@ class _LoginpageState extends State<Loginpage> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(result['error'])));
+          setState(() {
+            _isLoading = false;
+          });
         } else {
           try {
             await SharedPrefServiceLogin().saveLoginData(
@@ -53,6 +61,9 @@ class _LoginpageState extends State<Loginpage> {
               context,
             ).showSnackBar(SnackBar(content: Text(e.toString())));
           }
+          setState(() {
+            _isLoading = false;
+          });
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const Usergetqr()),
@@ -68,6 +79,9 @@ class _LoginpageState extends State<Loginpage> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(result['error'])));
+          setState(() {
+            _isLoading = false;
+          });
         } else {
           try {
             await SharedPrefServiceLogin().saveLoginData(
@@ -79,6 +93,9 @@ class _LoginpageState extends State<Loginpage> {
               context,
             ).showSnackBar(SnackBar(content: Text(e.toString())));
           }
+          setState(() {
+            _isLoading = false;
+          });
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const AdminScanQR()),
@@ -129,6 +146,7 @@ class _LoginpageState extends State<Loginpage> {
                 color: const Color.fromARGB(255, 56, 92, 221),
                 label: "Login",
                 onPressed: _login,
+                isLoading: _isLoading,
                 colorText: Colors.white,
               ),
               SizedBox(height: 10),

@@ -30,6 +30,7 @@ class _Registerpage4State extends State<Registerpage4> {
   }
 
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) {
@@ -43,6 +44,10 @@ class _Registerpage4State extends State<Registerpage4> {
       );
       return;
     }
+
+    setState(() {
+      _isLoading = true;
+    });
 
     try {
       final sharedPref = SharedPrefServiceRegister();
@@ -110,14 +115,23 @@ class _Registerpage4State extends State<Registerpage4> {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(result['error'])));
+        setState(() {
+          _isLoading = false;
+        });
       } else {
         await sharedPref.clearRegisterData();
+        setState(() {
+          _isLoading = false;
+        });
         if (mounted) bottomsit(context);
       }
     } catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("Error: $e")));
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -201,6 +215,7 @@ class _Registerpage4State extends State<Registerpage4> {
                 colorText: Colors.white,
                 label: "Daftar",
                 onPressed: _register,
+                isLoading: _isLoading,
               ),
             ],
           ),

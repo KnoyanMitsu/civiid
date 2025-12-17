@@ -23,6 +23,7 @@ class _FaceVerificationPageState extends State<FaceVerificationPage> {
   bool _isCameraInitialized = false;
   File? _capturedImage;
   final ImagePicker _imagePicker = ImagePicker();
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -65,6 +66,9 @@ class _FaceVerificationPageState extends State<FaceVerificationPage> {
 
   // Fungsi untuk mengambil foto dari kamera
   Future<void> _captureImage() async {
+    setState(() {
+      _isLoading = true;
+    });
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       return;
     }
@@ -112,6 +116,10 @@ class _FaceVerificationPageState extends State<FaceVerificationPage> {
     final predictionScore = result['score'];
 
     if (!mounted) return;
+
+    setState(() {
+      _isLoading = false;
+    });
 
     if (result['error'] != null) {
       showDialog(
@@ -241,6 +249,7 @@ class _FaceVerificationPageState extends State<FaceVerificationPage> {
               TheBestButtonWidget(
                 color: const Color.fromARGB(255, 56, 92, 221),
                 colorText: Colors.white,
+                isLoading: _isLoading,
                 label: 'Verifikasi',
                 onPressed: _captureImage,
               ),

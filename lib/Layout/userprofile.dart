@@ -22,13 +22,11 @@ class _UserprofileState extends State<Userprofile> {
   String photo_url = '';
   String status = '';
   String tempat_lahir = '';
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    // Defer the API call to ensure context is valid if needed, though passing context here is tricky if used directly.
-    // Ideally, we don't need context for the API call unless the API service needs it (it doesn't seems so from the code).
-    // But since the original code passed context, we'll keep it or just call it.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getUserProfile();
     });
@@ -60,8 +58,12 @@ class _UserprofileState extends State<Userprofile> {
             photo_url = value['data']['photo_url'] ?? '';
             status = value['data']['status'] ?? '-';
             tempat_lahir = value['data']['tempat_lahir'] ?? '-';
+            _isLoading = false;
           });
         } else {
+          setState(() {
+            _isLoading = false;
+          });
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Failed to load profile')),
           );
@@ -87,6 +89,73 @@ class _UserprofileState extends State<Userprofile> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSkeletonDetailItem() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 100,
+            height: 12,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: double.infinity,
+            height: 18,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSkeleton() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Container(
+            width: 150,
+            height: 150,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey.shade300,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        _buildSkeletonDetailItem(),
+        _buildSkeletonDetailItem(),
+        _buildSkeletonDetailItem(),
+        Row(
+          children: [
+            Expanded(child: _buildSkeletonDetailItem()),
+            const SizedBox(width: 12),
+            Expanded(child: _buildSkeletonDetailItem()),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(child: _buildSkeletonDetailItem()),
+            const SizedBox(width: 12),
+            Expanded(child: _buildSkeletonDetailItem()),
+          ],
+        ),
+        _buildSkeletonDetailItem(),
+        _buildSkeletonDetailItem(),
+      ],
     );
   }
 
@@ -120,58 +189,73 @@ class _UserprofileState extends State<Userprofile> {
             ),
           ],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.grey.shade300, width: 2),
-                  color: Colors.grey.shade200,
-                ),
-                child: ClipOval(
-                  child: photo_url.isNotEmpty
-                      ? Image.network(
-                          photo_url,
-                          fit: BoxFit.cover,
-                          width: 150,
-                          height: 150,
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Icon(
+        child: _isLoading
+            ? _buildSkeleton()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.grey.shade300,
+                          width: 2,
+                        ),
+                        color: Colors.grey.shade200,
+                      ),
+                      child: ClipOval(
+                        child: photo_url.isNotEmpty
+                            ? Image.network(
+                                photo_url,
+                                fit: BoxFit.cover,
+                                width: 150,
+                                height: 150,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(
+                                      Icons.person,
+                                      size: 80,
+                                      color: Colors.grey,
+                                    ),
+                              )
+                            : const Icon(
                                 Icons.person,
                                 size: 80,
                                 color: Colors.grey,
                               ),
-                        )
-                      : const Icon(Icons.person, size: 80, color: Colors.grey),
-                ),
+                      ),
+                    ),
+                  ),
+                  _buildDetailItem('NIK', nik),
+                  _buildDetailItem('Nama', name),
+                  _buildDetailItem('Jenis Kelamin', jenis_kelamin),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildDetailItem('Tempat Lahir', tempat_lahir),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildDetailItem('Tanggal Lahir', birth_date),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: _buildDetailItem('Agama', agama)),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildDetailItem('Nomor HP', phone_number),
+                      ),
+                    ],
+                  ),
+                  _buildDetailItem('Status', status),
+                  _buildDetailItem('Alamat', address),
+                ],
               ),
-            ),
-            _buildDetailItem('NIK', nik),
-            _buildDetailItem('Nama', name),
-            _buildDetailItem('Jenis Kelamin', jenis_kelamin),
-            Row(
-              children: [
-                Expanded(child: _buildDetailItem('Tempat Lahir', tempat_lahir)),
-                const SizedBox(width: 12),
-                Expanded(child: _buildDetailItem('Tanggal Lahir', birth_date)),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(child: _buildDetailItem('Agama', agama)),
-                const SizedBox(width: 12),
-                Expanded(child: _buildDetailItem('Nomor HP', phone_number)),
-              ],
-            ),
-            _buildDetailItem('Status', status),
-            _buildDetailItem('Alamat', address),
-          ],
-        ),
       ),
     );
   }
