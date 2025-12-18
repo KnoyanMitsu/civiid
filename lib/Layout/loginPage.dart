@@ -125,6 +125,12 @@ class _LoginpageState extends State<Loginpage> {
                   type: TypeField.number,
                   required: true,
                   controller: _nikController,
+                  validator: (value) {
+                    if (value != null && value.length != 16) {
+                      return 'NIK harus 16 digit';
+                    }
+                    return null;
+                  },
                 )
               else
                 TextFieldWithLabelWidget(

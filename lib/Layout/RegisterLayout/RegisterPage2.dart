@@ -72,6 +72,7 @@ class _Registerpage2State extends State<Registerpage2> {
                   "Hindu",
                   "Buddha",
                   "Konghucu",
+                  "Lainnya"
                 ],
               ),
               SizedBox(height: 15),
