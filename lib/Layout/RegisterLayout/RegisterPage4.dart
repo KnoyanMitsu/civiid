@@ -100,7 +100,6 @@ class _Registerpage4State extends State<Registerpage4> {
         data['name'] ?? '',
         data['email'] ?? '',
         data['password'] ?? '',
-        data['jenis_kelamin'] ?? '',
         data['tempat_lahir'] ?? '',
         birthDate,
         data['agama'] ?? '',

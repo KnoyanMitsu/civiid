@@ -7,6 +7,7 @@ class TextFieldWithLabelWidget extends StatefulWidget {
   final TextEditingController? controller;
   final TypeField type;
   final bool required;
+  final String? Function(String?)? validator;
 
   const TextFieldWithLabelWidget({
     super.key,
@@ -14,6 +15,7 @@ class TextFieldWithLabelWidget extends StatefulWidget {
     this.controller,
     this.type = TypeField.text,
     this.required = false,
+    this.validator,
   });
 
   @override
@@ -92,6 +94,10 @@ class _TextFieldWithLabelWidgetState extends State<TextFieldWithLabelWidget> {
           validator: (value) {
             if (widget.required && (value == null || value.isEmpty)) {
               return '${widget.label} tidak boleh kosong';
+            }
+            if (widget.validator != null) {
+              final result = widget.validator!(value);
+              if (result != null) return result;
             }
             if (widget.type == TypeField.email) {
               // Email regex check (if value is not empty)

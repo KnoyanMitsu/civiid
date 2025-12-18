@@ -29,7 +29,6 @@ class RegisterApi {
     String name,
     String email,
     String password,
-    String jenisKelamin,
     String tempatLahir,
     DateTime birthDate,
     String agama,
@@ -44,7 +43,6 @@ class RegisterApi {
       request.fields['name'] = name;
       request.fields['email'] = email;
       request.fields['password'] = password;
-      request.fields['jenis_kelamin'] = jenisKelamin;
       request.fields['tempat_lahir'] = tempatLahir;
       // Convert DateTime to ISO8601 string or backend expected format (yyyy-MM-dd)
       request.fields['birth_date'] = birthDate.toIso8601String().split('T')[0];

@@ -66,10 +66,45 @@ class _Registerpage2State extends State<Registerpage2> {
                 required: true,
               ),
               SizedBox(height: 15),
-              TextFieldWithLabelWidget(
-                label: "Status Perkawinan",
-                controller: _statusPerkawinanController,
-                required: true,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Status Perkawinan"),
+                  SizedBox(height: 5),
+                  DropdownButtonFormField<String>(
+                    value: _statusPerkawinanController.text.isEmpty
+                        ? null
+                        : _statusPerkawinanController.text,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 15,
+                      ),
+                    ),
+                    items: ["Belum Menikah", "Sudah Menikah"]
+                        .map(
+                          (label) => DropdownMenuItem(
+                            value: label,
+                            child: Text(label),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _statusPerkawinanController.text = value!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Status Perkawinan tidak boleh kosong';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
               ),
               SizedBox(height: 15),
               TextFieldWithLabelWidget(
@@ -77,6 +112,12 @@ class _Registerpage2State extends State<Registerpage2> {
                 controller: _phoneController,
                 type: TypeField.phone,
                 required: true,
+                validator: (value) {
+                  if (value != null && value.length < 10) {
+                    return 'Nomor HP tidak valid';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 30),
               TheBestButtonWidget(

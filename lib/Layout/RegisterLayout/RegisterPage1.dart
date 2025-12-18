@@ -68,6 +68,12 @@ class _RegisterPage1State extends State<RegisterPage1> {
                 controller: _nikController,
                 type: TypeField.number,
                 required: true,
+                validator: (value) {
+                  if (value != null && value.length != 16) {
+                    return 'NIK harus 16 digit';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 15),
               TextFieldWithLabelWidget(
