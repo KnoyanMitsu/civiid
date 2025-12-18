@@ -161,7 +161,11 @@ class _FaceVerificationPageState extends State<FaceVerificationPage> {
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Registerpage4()),
+          MaterialPageRoute(builder: (context) => VerificationResultPage(
+            capturedImage: image,
+            predictedGender: predictedGender ?? "",
+            debugMode: false,
+          )),
         );
       }
     }

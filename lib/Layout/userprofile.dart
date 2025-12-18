@@ -164,7 +164,7 @@ class _UserprofileState extends State<Userprofile> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Deteksi Gender',
+          'Profile',
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,

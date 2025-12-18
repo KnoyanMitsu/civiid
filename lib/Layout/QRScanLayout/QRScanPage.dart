@@ -58,7 +58,7 @@ class _QRScanPageState extends State<QRScanPage> with WidgetsBindingObserver {
   }
 
   // Function to handle detected QR code
-  void _onDetect(BarcodeCapture capture) {
+  Future<void> _onDetect(BarcodeCapture capture) async {
     if (!_isScanning) return;
 
     final List<Barcode> barcodes = capture.barcodes;
@@ -73,11 +73,21 @@ class _QRScanPageState extends State<QRScanPage> with WidgetsBindingObserver {
           _isScanning = false;
         });
 
+        await _controller.stop();
+
         // Navigate to result processing with the detected string
-        Navigator.push(
+        if (!mounted) return;
+        await Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Userprofile(code: code)),
         );
+
+        if (mounted) {
+          await _controller.start();
+          setState(() {
+            _isScanning = true;
+          });
+        }
         break;
       }
     }
